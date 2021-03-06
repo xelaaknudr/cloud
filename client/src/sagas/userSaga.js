@@ -1,10 +1,8 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
-import { actions, appendUserActionCreator } from '../actions/user'
-import {toastr} from 'react-redux-toastr'
+import { toastr } from 'react-redux-toastr';
+import { actions, appendUserActionCreator } from '../actions/user';
 
-import { signIn, logIn, auth } from '../api/user'
-
-
+import { signIn, logIn, auth } from '../api/user';
 
 export function* signInSaga({ payload }) {
   try {
@@ -18,7 +16,7 @@ export function* signInSaga({ payload }) {
 export function* logInSaga({ payload }) {
   try {
     const { data } = yield call(logIn, payload);
-    yield put(appendUserActionCreator(data))
+    yield put(appendUserActionCreator(data));
     localStorage.setItem('token', data.token);
   } catch (e) {
     toastr.error(e.response.data.message);
@@ -28,7 +26,7 @@ export function* logInSaga({ payload }) {
 export function* authSaga() {
   try {
     const { data } = yield call(auth);
-    yield put(appendUserActionCreator(data))
+    yield put(appendUserActionCreator(data));
     localStorage.setItem('token', data.token);
   } catch (e) {
     localStorage.removeItem('token');
@@ -38,5 +36,5 @@ export function* authSaga() {
 export default [
   takeEvery(actions.SIGN_IN, signInSaga),
   takeEvery(actions.LOG_IN, logInSaga),
-  takeEvery(actions.AUTH, authSaga)
+  takeEvery(actions.AUTH, authSaga),
 ];

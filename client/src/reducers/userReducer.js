@@ -1,26 +1,26 @@
-import { actions } from "../actions/user";
+import { actions } from '../actions/user';
 
 const userState = {
-  currentUser : {},
+  currentUser: {},
   isAuth: false,
-}
+};
 
 export default function userReducer(state = userState, action) {
-  switch (action.type){
+  switch (action.type) {
     case actions.APPEND_USER:
       return {
         ...state,
         currentUser: action.payload,
         isAuth: true,
-      }
+      };
     case actions.LOGOUT:
-      localStorage.removeItem('token')
+      localStorage.removeItem('token');
       return {
         ...state,
         currentUser: {},
         isAuth: false,
-      }
+      };
     default:
-      return state
+      return state;
   }
 }

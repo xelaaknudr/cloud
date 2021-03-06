@@ -1,10 +1,10 @@
 import React from 'react';
 import './disk.css';
-import {useDispatch} from "react-redux";
-import {removeUploadFile} from "../../actions/file";
+import { useDispatch } from 'react-redux';
+import { removeUploadFile } from '../../actions/file';
 
-const UploadFile = ({file}) => {
-  const dispatch = useDispatch()
+const UploadFile = ({ file }) => {
+  const dispatch = useDispatch();
 
   return (
     <div className="upload-file">
@@ -13,8 +13,11 @@ const UploadFile = ({file}) => {
         <button className="upload-file__remove" onClick={() => dispatch(removeUploadFile(file.id))}>X</button>
       </div>
       <div className="upload-file__progress-bar">
-        <div className="upload-file__upload-bar" style={{width: file.progress + "%"}}/>
-        <div className="upload-file__percent">{file.progress}%</div>
+        <div className="upload-file__upload-bar" style={{ width: `${file.progress}%` }} />
+        <div className="upload-file__percent">
+          {file.progress}
+          %
+        </div>
       </div>
     </div>
   );

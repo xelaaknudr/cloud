@@ -21,7 +21,8 @@
     "mongoose": "^5.9.25"
   },
   "devDependencies": {
-    "eslint": "*",
-    "eslint-config-google": "*"
+    "eslint": "^7.21.0",
+    "eslint-config-google": "*",
+    "eslint-plugin-node": "^11.1.0"
   }
 }

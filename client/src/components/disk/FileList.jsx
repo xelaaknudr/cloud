@@ -5,9 +5,10 @@ import File from "./File";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 const FileList = () => {
-
+  const fileView = useSelector(state => state.files.fileView);
+  console.log(fileView);
   const files = useSelector(state => state.files.files).map(file => (
-    <TransitionGroup>
+    <TransitionGroup key={file._id}>
       <CSSTransition
         key={file._id}
         timeout={500}
@@ -25,16 +26,26 @@ const FileList = () => {
     )
   }
 
-  return (
-    <div className='filelist'>
-      <div className="filelist__header">
-        <div className="filelist__name">Название</div>
-        <div className="filelist__date">Дата</div>
-        <div className="filelist__size">Размер</div>
+  if(fileView === 'list'){
+    return (
+      <div className='filelist'>
+        <div className="filelist__header">
+          <div className="filelist__name">Название</div>
+          <div className="filelist__date">Дата</div>
+          <div className="filelist__size">Размер</div>
+        </div>
+        {files}
       </div>
-      {files}
-    </div>
-  );
+    )
+  }
+
+  if(fileView === 'plate'){
+    return (
+      <div className='fileplate'>
+        {files}
+      </div>
+    )
+  }
 };
 
 export default FileList;

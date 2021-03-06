@@ -6,8 +6,8 @@ export const actions = {
   AUTH: 'AUTH',
 };
 
-export const signInActionCreator = user => ({ type: actions.SIGN_IN, payload: user });
-export const logInActionCreator = user => ({ type: actions.LOG_IN, payload: user });
-export const appendUserActionCreator = user => ({ type: actions.APPEND_USER, payload: user });
+export const signInActionCreator = (user) => ({ type: actions.SIGN_IN, payload: user });
+export const logInActionCreator = (user) => ({ type: actions.LOG_IN, payload: user });
+export const appendUserActionCreator = (user) => ({ type: actions.APPEND_USER, payload: user });
 export const logoutActionCreator = () => ({ type: actions.LOGOUT });
 export const authActionCreator = () => ({ type: actions.AUTH });

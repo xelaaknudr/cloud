@@ -1,4 +1,5 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
+import { toastr } from 'react-redux-toastr';
 import {
   actions,
   setFilesActionCreator,
@@ -6,34 +7,31 @@ import {
   deleteFile,
   showUploader,
   addUploadFile,
-  loaderWatcher,
-} from '../actions/file'
+} from '../actions/file';
 
-import {toastr} from 'react-redux-toastr'
-import { getFiles, createFile, uploadFile, donwloadFile, deleteFileReq, searchFile  } from '../api/disk';
-
-
+import {
+  getFiles, createFile, uploadFile, donwloadFile, deleteFileReq, searchFile,
+} from '../api/disk';
 
 export function* getFilesSaga({ payload }) {
   try {
-    console.log(payload, 'dlfg;dfkl;dfjgdkflgjdglkdj');
-    //yield put(loaderWatcher(true))
-    let url = `http://localhost:5000/api/files`
+    // yield put(loaderWatcher(true))
+    let url = 'http://localhost:5000/api/files';
     if (payload.currentDir) {
-      url = `http://localhost:5000/api/files?parent=${payload.currentDir}`
+      url = `http://localhost:5000/api/files?parent=${payload.currentDir}`;
     }
     if (payload.sort) {
-      url = `http://localhost:5000/api/files?sort=${payload.sort}`
+      url = `http://localhost:5000/api/files?sort=${payload.sort}`;
     }
     if (payload.currentDir && payload.sort) {
-      url = `http://localhost:5000/api/files?parent=${payload.currentDir}&sort=${payload.sort}`
+      url = `http://localhost:5000/api/files?parent=${payload.currentDir}&sort=${payload.sort}`;
     }
-    const { data } = yield call(getFiles, { url: url });
+    const { data } = yield call(getFiles, { url });
     yield put(setFilesActionCreator(data));
   } catch (e) {
     toastr.error(e.response.data.message);
   } finally {
-    //yield put(loaderWatcher(false))
+    // yield put(loaderWatcher(false))
   }
 }
 
@@ -55,11 +53,11 @@ export function* searchFileSaga({ payload }) {
   } catch (e) {
     toastr.error(e.response.data.message);
   } finally {
-    //yield put(loaderWatcher(false))
+    // yield put(loaderWatcher(false))
   }
 }
 
-/*function uploadEmitter(file) {
+/* function uploadEmitter(file) {
   return eventChannel(emit => {
     axios.post(
       'http://localhost:5000/api/files/upload',
@@ -79,7 +77,7 @@ export function* searchFileSaga({ payload }) {
     ).then(res => res)
       .catch(e => console.log(e))
   });
-}*/
+} */
 
 export function* uploadFileSaga({ payload }) {
   try {
@@ -89,9 +87,9 @@ export function* uploadFileSaga({ payload }) {
       formData.append('dirId', payload.dirId);
     }
 
-    const uploaderFile = { name: payload.file.name, process: 0 }
-    yield put(showUploader())
-    yield put(addUploadFile(uploaderFile))
+    const uploaderFile = { name: payload.file.name, process: 0 };
+    yield put(showUploader());
+    yield put(addUploadFile(uploaderFile));
     const req = yield call(uploadFile, formData);
     console.log(req);
     yield put(addFileActionCreator(req.data));
@@ -100,7 +98,7 @@ export function* uploadFileSaga({ payload }) {
   }
 }
 
-/*export function uploadFileTest(payload) {
+/* export function uploadFileTest(payload) {
   return async dispatch => {
     try {
       console.log(payload);
@@ -127,12 +125,12 @@ export function* uploadFileSaga({ payload }) {
       toastr.error(e.response.data.message);
     }
   }
-}*/
+} */
 
 export function* donwloadFileSaga({ payload }) {
   try {
     const response = yield call(donwloadFile, payload);
-    if(response.status === 200){
+    if (response.status === 200) {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -148,14 +146,12 @@ export function* donwloadFileSaga({ payload }) {
 
 export function* deleteFileSaga({ payload }) {
   try {
-    const res = yield call(deleteFileReq, payload);
-    yield put(deleteFile(payload._id))
-    //alert(res.data.message);
+    yield call(deleteFileReq, payload);
+    yield put(deleteFile(payload._id));
   } catch (e) {
     toastr.error(e.response.data.message);
   }
 }
-
 
 export default [
   takeEvery(actions.SEARCH_FILE, searchFileSaga),

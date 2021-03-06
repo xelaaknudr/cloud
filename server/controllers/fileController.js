@@ -6,9 +6,9 @@ const fs = require('fs');
 class FileController {
   async createDir(req, res) {
     try {
-      const {name, type, parent} = req.body;
-      const file = new File({name, type, parent, user: req.user.id});
-      const parentFile = await File.findOne({_id: parent});
+      const {name, type, parent} = req.body
+      const file = new File({name, type, parent, user: req.user.id})
+      const parentFile = await File.findOne({_id: parent})
       if (!parentFile) {
         file.path = name;
         await fileService.createDir(file);
@@ -28,7 +28,6 @@ class FileController {
 
   async getFiles(req, res) {
     try {
-      console.log('при получении файлов')
       let files;
       const {sort} = req.query;
       switch (sort){
@@ -55,15 +54,12 @@ class FileController {
 
   async uploadFile(req, res) {
     try {
-      const dirId = req.files.dirId;
       const file = req.files.file
       const parent = await File.findOne({user: req.user.id, _id: req.body.dirId})
       const user = await User.findOne({_id: req.user.id})
-
       if (user.usedSpace + file.size > user.diskSpace) {
         return res.status(400).json({message: 'There no space on the disk'})
       }
-
       user.usedSpace = user.usedSpace + file.size
 
       let path;
@@ -76,7 +72,6 @@ class FileController {
         return res.status(400).json({message: 'File already exist'})
       }
       file.mv(path)
-
       const type = file.name.split('.').pop()
       let filePath = file.name;
       if(parent){
@@ -90,10 +85,8 @@ class FileController {
         parent: parent?._id,
         user: user._id
       })
-
       await dbFile.save()
       await user.save()
-
       res.json(dbFile)
     } catch (e) {
       console.log(e)
@@ -103,12 +96,9 @@ class FileController {
 
   async downloadFile(req, res) {
     try {
-      console.log('привет это лог из доунлоад файла')
       const file = await File.findOne({ _id: req.query.id, user: req.user.id })
       console.log(file);
       const path = `${__dirname.split('controllers')[0]}files/${req.user.id}/${file.path}`
-
-      console.log(path);
       if(fs.existsSync(path)){
         return res.download(path, file.name)
       }
@@ -122,7 +112,6 @@ class FileController {
 
   async deleteFile(req, res){
     try {
-      console.log('при удалении')
       const file = await File.findOne({ _id: req.query.id, user: req.user.id })
       if(!file){
         res.status(400).json({ message: 'Not found' })
