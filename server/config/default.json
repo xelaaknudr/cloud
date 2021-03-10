@@ -1,6 +1,6 @@
 {
   "serverPort": 5000,
-  "dbUrl": "mongodb://127.0.0.1:27017/local",
+  "dbUrl": "mongodb://uldi904gvt3hbds0jdx8:FuJQmNhUtZh44NGrJT3Y@bq4dwh9pd5s0vmo-mongodb.services.clever-cloud.com:27017/bq4dwh9pd5s0vmo",
   "secret": "disc-secret"
 }
 
