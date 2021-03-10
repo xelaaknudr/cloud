@@ -11,6 +11,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-underscore-dangle": "off",
     "jsx-a11y/label-has-associated-control": ["error", {
       "required": {
         "some": ["nesting", "id"]

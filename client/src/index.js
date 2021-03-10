@@ -6,9 +6,10 @@ import { store } from './reducers';
 import Alert from './utils/alert/alert';
 
 ReactDOM.render(
+  // eslint-disable-next-line react/jsx-filename-extension
   <React.StrictMode>
     <Provider store={store}>
-      <App {...store.getState()} />
+      <App />
       <Alert />
     </Provider>
   </React.StrictMode>,

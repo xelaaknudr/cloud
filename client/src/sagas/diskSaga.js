@@ -8,15 +8,20 @@ import {
   showUploader,
   addUploadFile,
 } from '../actions/file';
-
 import {
-  getFiles, createFile, uploadFile, donwloadFile, deleteFileReq, searchFile, uploadAvatar, deleteAvatar
+  getFiles,
+  createFile,
+  uploadFile,
+  donwloadFile,
+  deleteFileReq,
+  searchFile,
+  uploadAvatar,
+  deleteAvatar,
 } from '../api/disk';
-import {appendUserActionCreator} from "../actions/user";
+import { appendUserActionCreator } from '../actions/user';
 
 export function* getFilesSaga({ payload }) {
   try {
-    // yield put(loaderWatcher(true))
     let url = 'http://localhost:5000/api/files';
     if (payload.currentDir) {
       url = `http://localhost:5000/api/files?parent=${payload.currentDir}`;
@@ -31,14 +36,11 @@ export function* getFilesSaga({ payload }) {
     yield put(setFilesActionCreator(data));
   } catch (e) {
     toastr.error(e.response.data.message);
-  } finally {
-    // yield put(loaderWatcher(false))
   }
 }
 
 export function* createFileSaga({ payload }) {
   try {
-    console.log(payload);
     const { data } = yield call(createFile, payload);
     yield put(addFileActionCreator(data));
   } catch (e) {
@@ -48,37 +50,12 @@ export function* createFileSaga({ payload }) {
 
 export function* searchFileSaga({ payload }) {
   try {
-    console.log(payload);
     const { data } = yield call(searchFile, payload);
     yield put(setFilesActionCreator(data));
   } catch (e) {
     toastr.error(e.response.data.message);
-  } finally {
-    // yield put(loaderWatcher(false))
   }
 }
-
-/* function uploadEmitter(file) {
-  return eventChannel(emit => {
-    axios.post(
-      'http://localhost:5000/api/files/upload',
-      file,
-      {headers: {
-          Authorization:`Bearer ${localStorage.getItem('token')}`
-        },
-        onUploadProgress: progressEvent => {
-          const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-          if (totalLength) {
-            let progress = JSON.stringify(Math.round((progressEvent.loaded * 100) / totalLength));
-            console.log(progress);
-            emit(progress);
-          }
-        }
-      },
-    ).then(res => res)
-      .catch(e => console.log(e))
-  });
-} */
 
 export function* uploadFileSaga({ payload }) {
   try {
@@ -92,41 +69,11 @@ export function* uploadFileSaga({ payload }) {
     yield put(showUploader());
     yield put(addUploadFile(uploaderFile));
     const req = yield call(uploadFile, formData);
-    console.log(req);
     yield put(addFileActionCreator(req.data));
   } catch (e) {
     toastr.error(e.response.data.message);
   }
 }
-
-/* export function uploadFileTest(payload) {
-  return async dispatch => {
-    try {
-      console.log(payload);
-      const formData = new FormData()
-      formData.append('file', payload.file)
-      if (payload.dirId) {
-        formData.append('dirId', payload.dirId)
-      }
-      const uploadFile = {name: payload.file.name, progress: 0, id: Date.now()}
-      dispatch(showUploader())
-      dispatch(addUploadFile(uploadFile))
-      const response = await axios.post(`http://localhost:5000/api/files/upload`, formData, {
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
-        onUploadProgress: progressEvent => {
-          const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-          if (totalLength) {
-            uploadFile.progress = Math.round((progressEvent.loaded * 100) / totalLength)
-            dispatch(changeUploadFile(uploadFile))
-          }
-        }
-      });
-      dispatch(addFileActionCreator(response.data))
-    } catch (e) {
-      toastr.error(e.response.data.message);
-    }
-  }
-} */
 
 export function* donwloadFileSaga({ payload }) {
   try {
@@ -154,11 +101,9 @@ export function* deleteFileSaga({ payload }) {
   }
 }
 
-
 export function* uploadAvatarSaga({ payload }) {
   try {
     const formData = new FormData();
-    console.log(payload);
     formData.append('file', payload);
     const req = yield call(uploadAvatar, formData);
     yield put(appendUserActionCreator(req.data));
@@ -175,7 +120,6 @@ export function* deleteAvatarSaga() {
     toastr.error(e.response.data.message);
   }
 }
-
 
 export default [
   takeEvery(actions.UPLOAD_AVATAR, uploadAvatarSaga),

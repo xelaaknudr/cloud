@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getFilesActionCreator,
@@ -14,7 +14,6 @@ import './disk.css';
 const Disc = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector((state) => state.files.currentDir);
-  // const loaderWatcher = useSelector(state => state.files.loaderWatcher)
   const dirStack = useSelector((state) => state.files.dirStack);
 
   const [dragEnter, setDragEnter] = useState(false);
@@ -111,7 +110,6 @@ const Disc = () => {
             <FileList />
           </div>
           <PopupAlert />
-          {/* <Uploader/> */}
         </div>
       )
       : (
