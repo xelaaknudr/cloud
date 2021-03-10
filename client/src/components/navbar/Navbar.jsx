@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
 import './navbar.css';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutActionCreator } from '../../actions/user';
 import { getFilesActionCreator, searchFile, loaderWatcher } from '../../actions/file';
-import avatarLogo from '../../assets/img/avatar.svg'
+import avatarLogo from '../../assets/img/avatar.svg';
 
 const Navbar = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
@@ -14,7 +14,6 @@ const Navbar = () => {
   const [searchTimeout, setSearchTimeout] = useState(false);
 
   const avatar = currentUser.avatar ? `http://localhost:5000/${currentUser.avatar}` : avatarLogo;
-
 
   const dispatch = useDispatch();
   return (
@@ -36,7 +35,7 @@ const Navbar = () => {
             }
             dispatch(loaderWatcher(true));
             if (e.target.value !== '') {
-              setSearchTimeout(setTimeout((value) => {
+              setSearchTimeout(setTimeout(() => {
                 dispatch(searchFile(e.target.value));
               }, 500, e.target.value));
             } else {
@@ -47,11 +46,22 @@ const Navbar = () => {
         )}
         {!isAuth && <div className="navbar__login"><NavLink to="/autorization">Войти</NavLink></div>}
         {!isAuth && <div className="navbar__registration"><NavLink to="/registration">Регистрация</NavLink></div>}
-        {isAuth && <div className="navbar__login" onClick={() => dispatch(logoutActionCreator())}>Выход</div>}
-        {isAuth &&
+        {isAuth
+        && (
+        <div
+          aria-hidden="true"
+          className="navbar__login"
+          onClick={() => dispatch(logoutActionCreator())}
+        >
+          Выход
+        </div>
+        )}
+        {isAuth
+        && (
         <NavLink to="/profile">
-          <img className="navbar__avatar" src={avatar} alt=""/>
-        </NavLink>}
+          <img className="navbar__avatar" src={avatar} alt="" />
+        </NavLink>
+        )}
       </div>
     </div>
   );

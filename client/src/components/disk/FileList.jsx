@@ -1,34 +1,34 @@
 import React from 'react';
-import './disk.css'
-import {useSelector} from "react-redux";
-import File from "./File";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
+import './disk.css';
+import { useSelector } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import File from './File';
 
-const FileList = () => {
-  const fileView = useSelector(state => state.files.fileView);
-  console.log(fileView);
-  const files = useSelector(state => state.files.files).map(file => (
+function FileList() {
+  const fileView = useSelector((state) => state.files.fileView);
+  const files = useSelector((state) => state.files.files).map((file) => (
     <TransitionGroup key={file._id}>
       <CSSTransition
         key={file._id}
         timeout={500}
-        classNames={'file'}
+        classNames="file"
         exit={false}
       >
-        <File key={file._id} file={file}/>
+        <File key={file._id} file={file} />
       </CSSTransition>
 
-  </TransitionGroup>))
+    </TransitionGroup>
+  ));
 
-  if(!files.length){
+  if (!files.length) {
     return (
       <div className="loader">Файлов в этой папке нету</div>
-    )
+    );
   }
 
-  if(fileView === 'list'){
+  if (fileView === 'list') {
     return (
-      <div className='filelist'>
+      <div className="filelist">
         <div className="filelist__header">
           <div className="filelist__name">Название</div>
           <div className="filelist__date">Дата</div>
@@ -36,16 +36,16 @@ const FileList = () => {
         </div>
         {files}
       </div>
-    )
+    );
   }
 
-  if(fileView === 'plate'){
+  if (fileView === 'plate') {
     return (
-      <div className='fileplate'>
+      <div className="fileplate">
         {files}
       </div>
-    )
+    );
   }
-};
+}
 
 export default FileList;

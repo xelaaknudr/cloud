@@ -196,6 +196,7 @@
 
 
 .file {
+    cursor: pointer;
     margin: 10px 0;
     border-bottom: solid 2px #566885;
     display: grid;

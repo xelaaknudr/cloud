@@ -1,12 +1,18 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {deleteAvatarActionCreator, uploadAvatarActionCreator} from "../../actions/file";
+import {
+  deleteAvatarActionCreator,
+  uploadAvatarActionCreator,
+} from '../../actions/file';
 
 const Profile = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <button onClick={() => dispatch(deleteAvatarActionCreator())}>
+      <button
+        type="button"
+        onClick={() => dispatch(deleteAvatarActionCreator())}
+      >
         Удалить аватар
       </button>
       <input

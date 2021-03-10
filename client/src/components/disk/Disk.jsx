@@ -8,10 +8,10 @@ import {
   setFileView,
 } from '../../actions/file';
 import FileList from './FileList';
-import Popup from './Popup';
+import PopupAlert from './PopupAlert';
 import './disk.css';
 
-const Disc = (props) => {
+const Disc = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector((state) => state.files.currentDir);
   // const loaderWatcher = useSelector(state => state.files.loaderWatcher)
@@ -58,25 +58,28 @@ const Disc = (props) => {
 
   useEffect(() => {
     dispatch(getFilesActionCreator({ currentDir, sort }));
-  }, currentDir, sort);
+  }, [currentDir, dispatch, sort]);
 
-  if (props.loaderWatcher) {
-    return (
-      <div className="loader">
-        <div className="lds-hourglass" />
-      </div>
-    );
-  }
   return (
     !dragEnter
       ? (
         <div>
-          <div className="disk" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
+          <div
+            className="disk"
+            onDragEnter={dragEnterHandler}
+            onDragLeave={dragLeaveHandler}
+            onDragOver={dragEnterHandler}
+          >
             <div className="disk__btns">
-              <button className="disk__back" onClick={() => backHandler()}>Назад</button>
-              <button className="disk__create" onClick={() => popupHandler()}>Создать папку</button>
+              <button type="button" className="disk__back" onClick={() => backHandler()}>Назад</button>
+              <button type="button" className="disk__create" onClick={() => popupHandler()}>Создать папку</button>
               <div className="disk__upload">
-                <label htmlFor="disk__upload-input" className="disk__upload-label">Загрузить файл</label>
+                <label
+                  htmlFor="disk__upload-input"
+                  className="disk__upload-label"
+                >
+                  Загрузить файл
+                </label>
                 <input
                   multiple
                   onChange={(event) => {
@@ -92,12 +95,22 @@ const Disc = (props) => {
                 <option value="date">date</option>
                 <option value="type">type</option>
               </select>
-              <button className="disk__plate" onClick={() => dispatch(setFileView('plate'))} />
-              <button className="disk__list" onClick={() => dispatch(setFileView('list'))} />
+              <button
+                aria-label="plate"
+                type="button"
+                className="disk__plate"
+                onClick={() => dispatch(setFileView('plate'))}
+              />
+              <button
+                aria-label="list"
+                type="button"
+                className="disk__list"
+                onClick={() => dispatch(setFileView('list'))}
+              />
             </div>
             <FileList />
           </div>
-          <Popup />
+          <PopupAlert />
           {/* <Uploader/> */}
         </div>
       )

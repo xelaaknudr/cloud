@@ -28,7 +28,10 @@ export const getFilesActionCreator = (dirId) => ({ type: actions.GET_FILES, payl
 export const setFilesActionCreator = (files) => ({ type: actions.SET_FILES, payload: files });
 export const createFileActionCreator = (file) => ({ type: actions.CREATE_FILE, payload: file });
 export const addFileActionCreator = (file) => ({ type: actions.ADD_FILE, payload: file });
-export const setCurrentDirActionCreator = (dir) => ({ type: actions.SET_CURRENT_DIR, payload: dir });
+export const setCurrentDirActionCreator = (dir) => ({
+  type: actions.SET_CURRENT_DIR,
+  payload: dir,
+});
 export const pushToStack = (stack) => ({ type: actions.PUSH_TO_STACK, payload: stack });
 export const popFromStack = (stack) => ({ type: actions.POP_FROM_STACK, payload: stack });
 export const uploadFiles = (files) => ({ type: actions.UPLOAD_FILES, payload: files });
@@ -43,8 +46,8 @@ export const changeUploadFile = (file) => ({ type: actions.CHANGE_UPLOADER_FILE,
 export const loaderWatcher = (loader) => ({ type: actions.LOADER_WATCHER, payload: loader });
 export const searchFile = (query) => ({ type: actions.SEARCH_FILE, payload: query });
 export const setFileView = (type) => ({ type: actions.SET_FILE_VIEW, payload: type });
-
-
-
-export const uploadAvatarActionCreator = (avatar) => ({ type: actions.UPLOAD_AVATAR, payload: avatar })
-export const deleteAvatarActionCreator = () => ({ type: actions.DELETE_AVATAR })
+export const uploadAvatarActionCreator = (avatar) => ({
+  type: actions.UPLOAD_AVATAR,
+  payload: avatar,
+});
+export const deleteAvatarActionCreator = () => ({ type: actions.DELETE_AVATAR });
