@@ -16,7 +16,7 @@ export function* signInSaga({ payload }) {
 export function* logInSaga({ payload }) {
   try {
     const { data } = yield call(logIn, payload);
-    yield put(appendUserActionCreator(data));
+    yield put(appendUserActionCreator(data.user));
     localStorage.setItem('token', data.token);
   } catch (e) {
     toastr.error(e.response.data.message);
@@ -26,7 +26,7 @@ export function* logInSaga({ payload }) {
 export function* authSaga() {
   try {
     const { data } = yield call(auth);
-    yield put(appendUserActionCreator(data));
+    yield put(appendUserActionCreator(data.user));
     localStorage.setItem('token', data.token);
   } catch (e) {
     localStorage.removeItem('token');

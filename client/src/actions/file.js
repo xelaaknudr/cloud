@@ -19,6 +19,8 @@ export const actions = {
   LOADER_WATCHER: 'LOADER_WATCHER',
   SEARCH_FILE: 'SEARCH_FILE',
   SET_FILE_VIEW: 'SET_FILE_VIEW',
+  UPLOAD_AVATAR: 'UPLOAD_AVATAR',
+  DELETE_AVATAR: 'DELETE_AVATAR',
 };
 
 export const setPopupDisplay = (popup) => ({ type: actions.SET_POP_UP_DISPLAY, payload: popup });
@@ -41,3 +43,8 @@ export const changeUploadFile = (file) => ({ type: actions.CHANGE_UPLOADER_FILE,
 export const loaderWatcher = (loader) => ({ type: actions.LOADER_WATCHER, payload: loader });
 export const searchFile = (query) => ({ type: actions.SEARCH_FILE, payload: query });
 export const setFileView = (type) => ({ type: actions.SET_FILE_VIEW, payload: type });
+
+
+
+export const uploadAvatarActionCreator = (avatar) => ({ type: actions.UPLOAD_AVATAR, payload: avatar })
+export const deleteAvatarActionCreator = () => ({ type: actions.DELETE_AVATAR })

@@ -10,8 +10,9 @@ import {
 } from '../actions/file';
 
 import {
-  getFiles, createFile, uploadFile, donwloadFile, deleteFileReq, searchFile,
+  getFiles, createFile, uploadFile, donwloadFile, deleteFileReq, searchFile, uploadAvatar, deleteAvatar
 } from '../api/disk';
+import {appendUserActionCreator} from "../actions/user";
 
 export function* getFilesSaga({ payload }) {
   try {
@@ -153,7 +154,32 @@ export function* deleteFileSaga({ payload }) {
   }
 }
 
+
+export function* uploadAvatarSaga({ payload }) {
+  try {
+    const formData = new FormData();
+    console.log(payload);
+    formData.append('file', payload);
+    const req = yield call(uploadAvatar, formData);
+    yield put(appendUserActionCreator(req.data));
+  } catch (e) {
+    toastr.error(e.response.data.message);
+  }
+}
+
+export function* deleteAvatarSaga() {
+  try {
+    const req = yield call(deleteAvatar);
+    yield put(appendUserActionCreator(req.data));
+  } catch (e) {
+    toastr.error(e.response.data.message);
+  }
+}
+
+
 export default [
+  takeEvery(actions.UPLOAD_AVATAR, uploadAvatarSaga),
+  takeEvery(actions.DELETE_AVATAR, deleteAvatarSaga),
   takeEvery(actions.SEARCH_FILE, searchFileSaga),
   takeEvery(actions.DELETE_REQ, deleteFileSaga),
   takeEvery(actions.DOWNLOAD_FILE, donwloadFileSaga),

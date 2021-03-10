@@ -44,6 +44,25 @@ export function* uploadFile(formData) {
     });
 }
 
+export function* uploadAvatar(formData) {
+  return yield call(axios.post, 'http://localhost:5000/api/files/avatar',
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+}
+
+export function* deleteAvatar() {
+  return yield call(axios.delete, 'http://localhost:5000/api/files/avatar',
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+}
+
 export function* donwloadFile(payload) {
   return yield call(axios.get, `http://localhost:5000/api/files/download?id=${payload._id}`,
     {

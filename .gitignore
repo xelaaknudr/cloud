@@ -45,6 +45,7 @@ server/node_modules
 .idea
 /.idea
 
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 

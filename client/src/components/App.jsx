@@ -6,6 +6,7 @@ import Navbar from './navbar/Navbar';
 import Registration from './registration/Registration';
 import Autorization from './autorization/Autorization';
 import { authActionCreator } from '../actions/user';
+import Profile from '../components/navbar/Profile';
 import './app.css';
 import { useSelector, useDispatch } from 'react-redux';
 import Disc from './disk/Disk';
@@ -33,7 +34,8 @@ function App(props) {
             )
             : (
               <Switch>
-                <Route path="/" component={() => <Disc loader={files.loaderWatcher} />} />
+                <Route exact path="/" component={() => <Disc loader={files.loaderWatcher} />} />
+                <Route exact path="/profile" component={Profile} />
                 <Redirect to="/" />
               </Switch>
             )}

@@ -7,16 +7,16 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const cors = require('cors');
 const PORT = config.get('serverPort');
+const path = require('path');
 
 const corsMiddleware = require('./middleware/cors.middleware');
-
 app.use(fileUpload({}))
 app.use(corsMiddleware);
+app.use(express.static(path.join(__dirname, 'static')))
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/files', fileRouter);
-
 
 const start = async () => {
   try {
