@@ -23,7 +23,6 @@
     }],
     "no-console": "warn",
     "no-eval": "error",
-    "import/first": "error",
-    "no-underscore-dangle": "warn"
+    "import/first": "error"
   }
 }
